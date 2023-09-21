@@ -6,42 +6,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.axiomasi.springboot.backedapirest.models.dao.IClienteDao;
-import com.axiomasi.springboot.backedapirest.models.entity.Cliente;
+import com.axiomasi.springboot.backedapirest.models.dao.ICustomerDao;
+import com.axiomasi.springboot.backedapirest.models.entity.Customer;
 
 
 @Service
-public class ClienteServiceImplemt implements IClienteService {
+public class CustomerServiceImplemt implements ICustomerService {
 
     @Autowired
-    private IClienteDao clienteDao;
+    private ICustomerDao customerDao;
 
     @Override
     @Transactional(readOnly = true)
-    public List<Cliente> findAll() {
-        return (List<Cliente>) clienteDao.findAll();
+    public List<Customer> findAll() {
+        return (List<Customer>) customerDao.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente findById(long id) {
+    public Customer findById(Long id) {
         // Verifica que el ID no sea nulo antes de buscar en la base de datos
         if (id <= 0) {
             throw new IllegalArgumentException("El ID proporcionado no es válido: " + id);
         }
 
-        return clienteDao.findById(id).orElse(null);
+        return customerDao.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
-    public Cliente save(Cliente cliente) {
-        return clienteDao.save(cliente);
+    public Customer save(Customer customer) {
+        return customerDao.save(customer);
     }
 
     @Override
     @Transactional
-    public void delete(Cliente cliente) {
-        clienteDao.delete(cliente);
+    public void delete(Customer customer) {
+        customerDao.delete(customer);
     }
 }

@@ -1,23 +1,24 @@
 
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('rafael', 'talavera','rtalavera@live.com.ar', '2021-02-15')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Juan', 'Pérez', 'juan.perez@example.com', '2021-02-15')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Ana', 'González', 'ana.gonzalez@example.com', '2021-03-20')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Luis', 'Rodríguez', 'luis.rodriguez@example.com', '2021-04-25')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('María', 'López', 'maria.lopez@example.com', '2021-05-30')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Carlos', 'Martínez', 'carlos.martinez@example.com', '2021-06-05')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Sofía', 'Fernández', 'sofia.fernandez@example.com', '2021-07-10')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Pedro', 'Ramírez', 'pedro.ramirez@example.com', '2021-08-15')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Laura', 'Torres', 'laura.torres@example.com', '2021-09-20')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Miguel', 'Gómez', 'miguel.gomez@example.com', '2021-10-25')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Carmen', 'Díaz', 'carmen.diaz@example.com', '2021-11-30')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Diego', 'Hernández', 'diego.hernandez@example.com', '2022-01-05')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Raquel', 'Sánchez', 'raquel.sanchez@example.com', '2022-02-10')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Andrés', 'Pérez', 'andres.perez@example.com', '2022-03-15')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Isabel', 'González', 'isabel.gonzalez@example.com', '2022-04-20')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Javier', 'López', 'javier.lopez@example.com', '2022-05-25')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Elena', 'Martínez', 'elena.martinez@example.com', '2022-06-30')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('José', 'Fernández', 'jose.fernandez@example.com', '2022-07-05')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Beatriz', 'Ramírez', 'beatriz.ramirez@example.com', '2022-08-10')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Antonio', 'Torres', 'antonio.torres@example.com', '2022-09-15')
- INSERT INTO clientes (nombre, apellido, email, fecha) VALUES('Lucía', 'Gómez', 'lucia.gomez@example.com', '2022-10-20')
-  
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-18', 'talavera', '26666588', 'Dirección1', 'cliente1@email.com', 'Tarjeta', 'Nombre1', '123-456-7890');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-19', 'martino', '23366588' , 'Dirección2', 'cliente2@email.com', 'Efectivo', 'Nombre2', '987-654-3210');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-20', 'García', '26666538', 'Dirección3', 'cliente3@email.com', 'Transferencia', 'Nombre3', '555-555-5555');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-21', 'Pérez', '26634588','Dirección4', 'cliente4@email.com', 'Tarjeta', 'Nombre4', '111-222-3333');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-22', 'López', '26666348','Dirección5', 'cliente5@email.com', 'Efectivo', 'Nombre5', '444-555-6666');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-23', 'Rodríguez', '2266588', 'Dirección6', 'cliente6@email.com', 'Tarjeta', 'Nombre6', '777-888-9999');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-24', 'González', '29666588','Dirección7', 'cliente7@email.com', 'Efectivo', 'Nombre7', '222-333-4444');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-25', 'Martínez', '24666588','Dirección8', 'cliente8@email.com', 'Transferencia', 'Nombre8', '555-444-3333');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-26', 'Fernández', '25566588', 'Dirección9', 'cliente9@email.com', 'Tarjeta', 'Nombre9', '111-999-8888');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-27', 'Díaz', '268886588','Dirección10', 'cliente10@email.com', 'Efectivo', 'Nombre10', '777-666-5555');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-28', 'López', '2657588', 'Dirección11', 'cliente11@email.com', 'Transferencia', 'Nombre11', '444-333-2222');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-29', 'Ramírez', '28666588', 'Dirección12', 'cliente12@email.com', 'Tarjeta', 'Nombre12', '555-666-7777');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-09-30', 'Gómez', '26668588','Dirección13', 'cliente13@email.com', 'Efectivo', 'Nombre13', '222-111-9999');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-10-01', 'Sánchez', '26686588','Dirección14', 'cliente14@email.com', 'Transferencia', 'Nombre14', '111-222-3333');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-10-02', 'Pérez', '26668588','Dirección15', 'cliente15@email.com', 'Tarjeta', 'Nombre15', '555-444-3333');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-10-03', 'Díaz', '28788','Dirección16', 'cliente16@email.com', 'Efectivo', 'Nombre16', '111-999-8888');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-10-04', 'Díaz', '2588588','Dirección17', 'cliente17@email.com', 'Transferencia', 'Nombre17', '777-666-5555');
+INSERT INTO clientes (fecha, apellido, dni, direccion, email, metodo_pago, nombre, telefono) VALUES('2023-10-05', 'López', '2588588','Dirección18', 'cliente18@email.com', 'Tarjeta', 'Nombre18', '444-333-2222');
+
+
+
+
+
