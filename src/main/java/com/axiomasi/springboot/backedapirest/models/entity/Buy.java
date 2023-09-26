@@ -1,5 +1,6 @@
 package com.axiomasi.springboot.backedapirest.models.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -19,7 +21,7 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "buys")
-public class Buy {
+public class Buy implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +36,58 @@ public class Buy {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "buy")
 	private List<ItemBuy> itemsBuy;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Employee employee;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Provider provider;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Branch branch;
+
 	@PrePersist
 	public void prePersist() {
 		createAt = new Date();
 	}
 
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+
 	public Buy() {
-
 		itemsBuy = new ArrayList<>();
+	}
 
+	public Date getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public void setCustumer(Provider provider) {
+		this.provider = provider;
 	}
 
 	public Long getId() {
@@ -69,4 +114,19 @@ public class Buy {
 		this.itemsBuy = itemsBuy;
 	}
 
+	public Double getTotal() {
+
+		Double total = 0.0;
+
+		int size = itemsBuy.size();
+
+		for (int i = 0; i < size; i++) {
+			total += itemsBuy.get(i).calculatePayment();
+
+		}
+		return total;
+
+	}
+
+	private static final long serialVersionUID = 1L;
 }

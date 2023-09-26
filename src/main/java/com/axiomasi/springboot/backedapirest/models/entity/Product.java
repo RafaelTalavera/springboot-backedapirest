@@ -1,6 +1,7 @@
 package com.axiomasi.springboot.backedapirest.models.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +11,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product implements Serializable {
 
 	@Id
@@ -31,17 +34,19 @@ public class Product implements Serializable {
 	private String brand;
 
 	@NotNull
-	private double price;
+	private Double priceSale;
 
 	@NotNull
 	private int stock;
-
-	@NotEmpty
-	private String expiration;
+	
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	private Date expiration;
+	
+	private Double priceBuy;
 	
     @ManyToOne 
     @JoinColumn(name = "branch_id")
-    
     private Branch branch;
 
 	public Branch getBranch() {
@@ -84,12 +89,12 @@ public class Product implements Serializable {
 		this.brand = brand;
 	}
 
-	public double getPrice() {
-		return price;
+	public Double getPriceSale() {
+		return priceSale;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setPriceSale(Double priceSale) {
+		this.priceSale = priceSale;
 	}
 
 	public int getStock() {
@@ -100,12 +105,20 @@ public class Product implements Serializable {
 		this.stock = stock;
 	}
 
-	public String getExpiration() {
+	public Date getExpiration() {
 		return expiration;
 	}
 
-	public void setExpiration(String expiration) {
+	public void setExpiration(Date expiration) {
 		this.expiration = expiration;
+	}
+
+	public Double getPriceBuy() {
+		return priceBuy;
+	}
+
+	public void setPriceBuy(Double priceBuy) {
+		this.priceBuy = priceBuy;
 	}
 
 	private static final long serialVersionUID = 1L;

@@ -6,12 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -21,43 +22,71 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "customers")
+@Table(name="customers")
 public class Customer implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@NotEmpty
+	private Long dni;
+	
 	@NotEmpty
 	private String name;
 
 	@NotEmpty
 	private String lastname;
 
-	@NotEmpty
-	private String dni;
+	private String phone;
 
-	private String telefono;
+	private String payment;
 
-	@Column(name = "metodo_pago")
-	private String metodoPago;
+	private String address;
 
-	private String direccion;
-
-	@NotEmpty
 	@Email
-	@Column(nullable = false, unique = true)
 	private String email;
 
 	@Temporal(TemporalType.DATE)
-	private Date dateAt;
+	private Date alta;
 
-	@OneToMany(mappedBy = "custumer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Sale> sales;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Branch branch;
 
 	@PrePersist
 	public void prePersist() {
-		dateAt = new Date();
+		alta = new Date();
+	}
+
+	public List<Sale> getSales() {
+		return sales;
+	}
+
+	public void setSales(List<Sale> sales) {
+		this.sales = sales;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public Customer() {
@@ -88,36 +117,36 @@ public class Customer implements Serializable {
 		this.lastname = lastname;
 	}
 
-	public String getDni() {
+	public Long getDni() {
 		return dni;
 	}
 
-	public void setDni(String dni) {
+	public void setDni( Long dni) {
 		this.dni = dni;
 	}
 
-	public String getTelefono() {
-		return telefono;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+	public void setTelefono(String phone) {
+		this.phone = phone;
 	}
 
-	public String getMetodoPago() {
-		return metodoPago;
+	public String getPayment() {
+		return payment;
 	}
 
-	public void setMetodoPago(String metodoPago) {
-		this.metodoPago = metodoPago;
+	public void setMetodoPago(String payment) {
+		this.payment = payment;
 	}
 
-	public String getDireccion() {
-		return direccion;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setDireccion(String address) {
+		this.address = address;
 	}
 
 	public String getEmail() {
@@ -128,12 +157,12 @@ public class Customer implements Serializable {
 		this.email = email;
 	}
 
-	public Date getDateAt() {
-		return dateAt;
+	public Date getAlta() {
+		return alta;
 	}
 
-	public void setDateAt(Date dateAt) {
-		this.dateAt = dateAt;
+	public void setAlta(Date alta) {
+		this.alta = alta;
 	}
 
 	private static final long serialVersionUID = 1L;

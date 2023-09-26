@@ -121,7 +121,7 @@ public class CustomerRestController {
 			currentCustomer.setName(customer.getName());
 			currentCustomer.setLastname(customer.getLastname());
 			currentCustomer.setEmail(customer.getEmail());
-			currentCustomer.setDateAt(customer.getDateAt());
+			currentCustomer.setAlta(customer.getAlta());
 
 			Customer customerUpdated = customerService.save(currentCustomer);
 

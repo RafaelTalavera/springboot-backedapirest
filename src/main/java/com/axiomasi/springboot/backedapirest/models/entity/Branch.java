@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Branchs")
+@Table(name = "branchs")
 public class Branch implements Serializable {
 
 	@Id
@@ -40,19 +40,19 @@ public class Branch implements Serializable {
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Employee> employees;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Product> products;
 
-	@OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Provider> providers;
 
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Customer> customers;
 
-	@OneToMany(mappedBy = "buy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Buy> buys;
 
-	@OneToMany(mappedBy = "sale", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Sale> sales;
 
 	public Branch() {

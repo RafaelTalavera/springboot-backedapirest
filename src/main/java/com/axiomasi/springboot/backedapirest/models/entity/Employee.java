@@ -54,10 +54,10 @@ public class Employee implements Serializable {
 	@JoinColumn(name = "branch_id") // Agrega esta anotación para especificar la columna de clave externa
 	private Branch branch;
 
-	@OneToMany(mappedBy = "employed", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Sale> sales;
 
-	@OneToMany(mappedBy = "employed", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Buy> buys;
 
 	public Employee() {
