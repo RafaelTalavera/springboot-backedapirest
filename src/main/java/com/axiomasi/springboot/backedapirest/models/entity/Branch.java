@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,22 +39,30 @@ public class Branch implements Serializable {
 
 	@NotEmpty
 	private String phone;
-
+	
+	
+    @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Employee> employees;
-
+    
+    @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Product> products;
-
+    
+    @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Provider> providers;
-
+    
+    @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Customer> customers;
-
+    
+    @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Buy> buys;
 
+    @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Sale> sales;
 

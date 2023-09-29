@@ -3,6 +3,9 @@ package com.axiomasi.springboot.backedapirest.models.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,12 +44,14 @@ public class Product implements Serializable {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
+	
 	private Date expiration;
 	
 	private Double priceBuy;
 	
     @ManyToOne 
     @JoinColumn(name = "branch_id")
+    @JsonBackReference
     private Branch branch;
 
 	public Branch getBranch() {
@@ -120,6 +125,12 @@ public class Product implements Serializable {
 	public void setPriceBuy(Double priceBuy) {
 		this.priceBuy = priceBuy;
 	}
+	
+    // Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la relación branch
+    @JsonProperty("branch_id")
+    public Long getBranchId() {
+        return branch != null ? branch.getId() : null;
+    }
 
 	private static final long serialVersionUID = 1L;
 

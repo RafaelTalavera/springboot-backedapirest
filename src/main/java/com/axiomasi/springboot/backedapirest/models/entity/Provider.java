@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,9 +60,11 @@ public class Provider implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "branch_id") // Agregar una columna branch_id para la clave externa
+	@JsonBackReference
 	private Branch branch;
 
 	@OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Buy> buys;
 
 	public Provider() {
@@ -134,6 +139,22 @@ public class Provider implements Serializable {
 	public void setDateAt(Date dateAt) {
 		this.dateAt = dateAt;
 	}
+	
+	// Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la relación branch
+    @JsonProperty("branch_id")
+    public Long getBranchId() {
+        return branch != null ? branch.getId() : null;
+    }
+
+    // Usamos @JsonProperty para indicar que queremos mostrar solo los IDs de las sales
+    @JsonProperty("sales_ids")
+    public List<Long> getBuysIds() {
+        List<Long> buysIds = new ArrayList<>();
+        for (Buy buy : buys) {
+            buysIds.add(buy.getId());
+        }
+        return buysIds;
+    }
 
 	private static final long serialVersionUID = 1L;
 

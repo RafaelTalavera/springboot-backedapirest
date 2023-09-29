@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,50 +21,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.axiomasi.springboot.backedapirest.models.entity.Customer;
-import com.axiomasi.springboot.backedapirest.models.service.ICustomerService;
+import com.axiomasi.springboot.backedapirest.models.entity.Branch;
+import com.axiomasi.springboot.backedapirest.models.service.IBranchService;
 
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/api")
-public class CustomerRestController {
-
+public class BranchRestController {
+	
 	@Autowired
-	private ICustomerService customerService;
-
-	@GetMapping("/customer")
-	public List<Customer> index() {
-		return customerService.findAll();
+	private IBranchService branchService;
+	
+	@GetMapping("/branch")
+	public List<Branch> index(){
+		return branchService.findAll();
 	}
-
-	@GetMapping("/customer/{id}")
-	public ResponseEntity<?> show(@PathVariable Long id) {
-
-		Customer customer = null;
+	
+	@GetMapping("/branch/{id}")
+	public ResponseEntity<?> show(@PathVariable Long id){
+		
+		Branch branch = null;
 		Map<String, Object> response = new HashMap<>();
-
+		
 		try {
-			customer = customerService.findById(id);
+			branch = branchService.findById(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "<error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (customer == null) {
+		if (branch == null) {
 
-			response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos")));
+			response.put("mensaje", "La sucursal ID: ".concat(id.toString().concat(" no existe en la base de datos")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+		return new ResponseEntity<Branch>(branch, HttpStatus.OK);
 	}
-
-	@PostMapping("/customer")
-	public ResponseEntity<?> create(@Valid @RequestBody Customer customer, BindingResult result) { // Agrega la anotación @Valid y BindingResult
-		Customer clienteNew = null;
+		
+	@PostMapping("/branch")
+	public ResponseEntity<?> create(@Valid @RequestBody Branch branch, BindingResult result) { // Agrega la anotación @Valid y BindingResult
+		Branch branchNew = null;
 		Map<String, Object> response = new HashMap<>();
 		
 		if (result.hasErrors()) {
@@ -83,9 +82,9 @@ public class CustomerRestController {
 
 
 		try {
-			clienteNew = customerService.save(customer);
-			response.put("mensaje", "El cliente fue guardado correctamente");
-			response.put("cliente", clienteNew);
+			branchNew = branchService.save(branch);
+			response.put("mensaje", "La sucursal fue guardado correctamente");
+			response.put("Sucursal", branchNew);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
 			response.put("error", "Error al realizar el insert en la base de datos");
@@ -93,10 +92,10 @@ public class CustomerRestController {
 		}
 	}
 
-	@PutMapping("/customer/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody Customer customer,BindingResult result, @PathVariable Long id) {
+	@PutMapping("/branch/{id}")
+	public ResponseEntity<?> update(@Valid @RequestBody Branch branch,BindingResult result, @PathVariable Long id) {
 
-		Customer currentCustomer = customerService.findById(id);
+		Branch currentBranch = branchService.findById(id);
 
 		Map<String, Object> response = new HashMap<>();
 		
@@ -112,26 +111,25 @@ public class CustomerRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 
-		if (currentCustomer == null) {
-			response.put("mensaje", "Error, no se pudo editar el cliente ID: " + id + " no existe en la base de datos");
+		if (currentBranch == null) {
+			response.put("mensaje", "Error, no se pudo editar la Sucursa ID: " + id + " no existe en la base de datos");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
 		try {
-			currentCustomer.setDni(customer.getDni());
-			currentCustomer.setName(customer.getName());
-			currentCustomer.setLastname(customer.getLastname());
-			currentCustomer.setPhone(customer.getPhone());
-			currentCustomer.setPayment(customer.getPayment());
-			currentCustomer.setAddress(customer.getAddress());		
-			currentCustomer.setEmail(customer.getEmail());
-			currentCustomer.setAlta(customer.getAlta());
+		
+			currentBranch.setName(branch.getName());
+			currentBranch.setAddress(branch.getAddress());
+			currentBranch.setCity(branch.getCity());
+			currentBranch.setState(branch.getState());
+			currentBranch.setPhone(branch.getPhone());
+
 			
 
-			Customer customerUpdated = customerService.save(currentCustomer);
+			Branch branchUpdated = branchService.save(currentBranch);
 
-			response.put("mensaje", "El cliente ha sido actualizado con éxito");
-			response.put("cliente", customerUpdated);
+			response.put("mensaje", "La Sucursal ha sido actualizado con éxito");
+			response.put("sucursal", branchUpdated);
 
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
@@ -141,14 +139,14 @@ public class CustomerRestController {
 		}
 	}
 
-	@DeleteMapping("/customer/{id}")
+	@DeleteMapping("/branch/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Customer currentCustomer = this.customerService.findById(id);
+		Branch currentBranch = this.branchService.findById(id);
 
 		Map<String, Object> response = new HashMap<>();
 		try {
 
-			this.customerService.delete(currentCustomer);
+			this.branchService.delete(currentBranch);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar en la base de datos");
@@ -161,3 +159,7 @@ public class CustomerRestController {
 
 	}
 }
+
+	
+
+

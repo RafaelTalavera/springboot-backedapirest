@@ -11,7 +11,7 @@ import com.axiomasi.springboot.backedapirest.models.entity.Customer;
 
 
 @Service
-public class CustomerServiceImplemt implements ICustomerService {
+public class CustomerServiceImplent implements ICustomerService {
 
     @Autowired
     private ICustomerDao customerDao;

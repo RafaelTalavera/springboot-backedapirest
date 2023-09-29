@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,50 +21,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.axiomasi.springboot.backedapirest.models.entity.Customer;
-import com.axiomasi.springboot.backedapirest.models.service.ICustomerService;
+import com.axiomasi.springboot.backedapirest.models.entity.Employee;
+import com.axiomasi.springboot.backedapirest.models.service.IEmployeeService;
 
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/api")
-public class CustomerRestController {
+public class EmployeeRestContoller {
 
 	@Autowired
-	private ICustomerService customerService;
+	private IEmployeeService employeeService;
 
-	@GetMapping("/customer")
-	public List<Customer> index() {
-		return customerService.findAll();
+	@GetMapping("/employee")
+	public List<Employee> index() {
+		return employeeService.findAll();
 	}
 
-	@GetMapping("/customer/{id}")
+	@GetMapping("/employee/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id) {
 
-		Customer customer = null;
+		Employee employee = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			customer = customerService.findById(id);
+			employee= employeeService.findById(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "<error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (customer == null) {
+		if (employee == null) {
 
-			response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos")));
+			response.put("mensaje", "El empleado ID: ".concat(id.toString().concat(" no existe en la base de datos")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
 
-	@PostMapping("/customer")
-	public ResponseEntity<?> create(@Valid @RequestBody Customer customer, BindingResult result) { // Agrega la anotación @Valid y BindingResult
-		Customer clienteNew = null;
+	@PostMapping("/employee")
+	public ResponseEntity<?> create(@Valid @RequestBody Employee employee, BindingResult result) { // Agrega la anotación @Valid y BindingResult
+		Employee employeeNew = null;
 		Map<String, Object> response = new HashMap<>();
 		
 		if (result.hasErrors()) {
@@ -83,9 +82,9 @@ public class CustomerRestController {
 
 
 		try {
-			clienteNew = customerService.save(customer);
+			employeeNew  = employeeService.save(employee);
 			response.put("mensaje", "El cliente fue guardado correctamente");
-			response.put("cliente", clienteNew);
+			response.put("cliente", employeeNew);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
 			response.put("error", "Error al realizar el insert en la base de datos");
@@ -93,10 +92,10 @@ public class CustomerRestController {
 		}
 	}
 
-	@PutMapping("/customer/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody Customer customer,BindingResult result, @PathVariable Long id) {
+	@PutMapping("/employee/{id}")
+	public ResponseEntity<?> update(@Valid @RequestBody Employee employee,BindingResult result, @PathVariable Long id) {
 
-		Customer currentCustomer = customerService.findById(id);
+		Employee currentEmployee = employeeService.findById(id);
 
 		Map<String, Object> response = new HashMap<>();
 		
@@ -112,23 +111,21 @@ public class CustomerRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 
-		if (currentCustomer == null) {
-			response.put("mensaje", "Error, no se pudo editar el cliente ID: " + id + " no existe en la base de datos");
+		if (currentEmployee == null) {
+			response.put("mensaje", "Error, no se pudo editar el empleado ID: " + id + " no existe en la base de datos");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
 		try {
-			currentCustomer.setDni(customer.getDni());
-			currentCustomer.setName(customer.getName());
-			currentCustomer.setLastname(customer.getLastname());
-			currentCustomer.setPhone(customer.getPhone());
-			currentCustomer.setPayment(customer.getPayment());
-			currentCustomer.setAddress(customer.getAddress());		
-			currentCustomer.setEmail(customer.getEmail());
-			currentCustomer.setAlta(customer.getAlta());
-			
-
-			Customer customerUpdated = customerService.save(currentCustomer);
+			currentEmployee.setDni(employee.getDni());
+			currentEmployee.setCuit(employee.getCuit());
+			currentEmployee.setName(employee.getName());
+			currentEmployee.setLastname(employee.getLastname());
+			currentEmployee.setBirth(employee.getBirth());
+			currentEmployee.setAddress(employee.getAddress());
+			currentEmployee.setJob(employee.getJob());
+				
+			employeeUpdated = customerService.save(currentCustomer);
 
 			response.put("mensaje", "El cliente ha sido actualizado con éxito");
 			response.put("cliente", customerUpdated);
@@ -141,14 +138,14 @@ public class CustomerRestController {
 		}
 	}
 
-	@DeleteMapping("/customer/{id}")
+	@DeleteMapping("/employee/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Customer currentCustomer = this.customerService.findById(id);
+		Employee currentEmployee = this.employeeService.findById(id);
 
 		Map<String, Object> response = new HashMap<>();
 		try {
 
-			this.customerService.delete(currentCustomer);
+			this.employeeService.delete(currentEmployee);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar en la base de datos");

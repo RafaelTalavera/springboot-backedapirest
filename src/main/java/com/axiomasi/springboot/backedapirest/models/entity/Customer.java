@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -20,6 +25,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="customers")
@@ -29,12 +35,13 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty
+	@Column(nullable = false, unique = true)
+	@NotNull
 	private Long dni;
 	
 	@NotEmpty
 	private String name;
-
+	
 	@NotEmpty
 	private String lastname;
 
@@ -50,10 +57,15 @@ public class Customer implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date alta;
 
+	
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Sale> sales;
 
+	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "branch_id")
+	@JsonBackReference
 	private Branch branch;
 
 	@PrePersist
@@ -164,6 +176,23 @@ public class Customer implements Serializable {
 	public void setAlta(Date alta) {
 		this.alta = alta;
 	}
+	
+    // Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la relación branch
+    @JsonProperty("branch_id")
+    public Long getBranchId() {
+        return branch != null ? branch.getId() : null;
+    }
+
+    // Usamos @JsonProperty para indicar que queremos mostrar solo los IDs de las sales
+    @JsonProperty("sales_ids")
+    public List<Long> getSalesIds() {
+        List<Long> salesIds = new ArrayList<>();
+        for (Sale sale : sales) {
+            salesIds.add(sale.getId());
+           
+        }
+        return salesIds;
+    }
 
 	private static final long serialVersionUID = 1L;
 
