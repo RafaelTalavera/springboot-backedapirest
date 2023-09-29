@@ -183,7 +183,7 @@ public class Customer implements Serializable {
         return branch != null ? branch.getId() : null;
     }
 
-    // Usamos @JsonProperty para indicar que queremos mostrar solo los IDs de las sales
+   // Usamos @JsonProperty para indicar que queremos mostrar solo los IDs de las sales
     @JsonProperty("sales_ids")
     public List<Long> getSalesIds() {
         List<Long> salesIds = new ArrayList<>();

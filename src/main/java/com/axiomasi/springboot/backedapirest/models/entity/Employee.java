@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,12 +55,15 @@ public class Employee implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "branch_id") // Agrega esta anotación para especificar la columna de clave externa
+	@JsonBackReference
 	private Branch branch;
 
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Sale> sales;
 
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Buy> buys;
 
 	public Employee() {
@@ -152,7 +158,32 @@ public class Employee implements Serializable {
 	public void setBuys(List<Buy> buys) {
 		this.buys = buys;
 	}
+	
+	public Long getBranchId() {
+		
+		 return branch != null ? branch.getId() : null;
+	}
 
+	   @JsonProperty("sales_ids")
+	    public List<Long> getSalesIds() {
+	        List<Long> salesIds = new ArrayList<>();
+	        for (Sale sale : sales) {
+	            salesIds.add(sale.getId());
+	           
+	        }
+	        return salesIds;
+	    }
+	   
+	   @JsonProperty("buys_ids")
+	    public List<Long> getBuysIds() {
+	        List<Long> buysIds = new ArrayList<>();
+	        for (Buy buy : buys) {
+	            buysIds.add(buy.getId());
+	           
+	        }
+	        return buysIds;
+	    }
+	   
 	private static final long serialVersionUID = 1L;
 
 }

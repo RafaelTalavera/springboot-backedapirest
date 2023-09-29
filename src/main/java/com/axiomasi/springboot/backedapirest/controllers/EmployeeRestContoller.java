@@ -125,10 +125,10 @@ public class EmployeeRestContoller {
 			currentEmployee.setAddress(employee.getAddress());
 			currentEmployee.setJob(employee.getJob());
 				
-			employeeUpdated = customerService.save(currentCustomer);
+			 Employee employeeUpdated = employeeService.save(currentEmployee);
 
-			response.put("mensaje", "El cliente ha sido actualizado con éxito");
-			response.put("cliente", customerUpdated);
+			response.put("mensaje", "El empleado ha sido actualizado con éxito");
+			response.put("empleado", employeeUpdated);
 
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
