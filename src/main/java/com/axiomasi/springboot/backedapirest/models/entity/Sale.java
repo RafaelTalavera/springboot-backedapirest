@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,17 +37,19 @@ public class Sale implements Serializable {
 	private Date createAt;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "sale")
+	@JsonBackReference
 	private List<ItemSale> itemsSale;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Employee employee;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonBackReference
 	private Customer customer;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonBackReference
 	private Branch branch;
 
 	@PrePersist
@@ -120,6 +123,18 @@ public class Sale implements Serializable {
 		return total;
 
 	}
+	
+	   @JsonProperty("itemSale_ids")
+	    public List<Long> getItemSaleIds() {
+	        List<Long> itemSalesIds = new ArrayList<>();
+	        for (ItemSale itemSale : itemsSale) {
+	        	itemSalesIds.add(itemSale.getId());
+	           
+	        }
+	        return itemSalesIds;
+	    }
+	   
+
 
 	private static final long serialVersionUID = 1L;
 }
