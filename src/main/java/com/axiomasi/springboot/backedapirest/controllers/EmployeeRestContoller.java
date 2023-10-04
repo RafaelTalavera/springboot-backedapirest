@@ -124,6 +124,7 @@ public class EmployeeRestContoller {
 			currentEmployee.setBirth(employee.getBirth());
 			currentEmployee.setAddress(employee.getAddress());
 			currentEmployee.setJob(employee.getJob());
+			currentEmployee.setRegistration(employee.getRegistration());
 				
 			 Employee employeeUpdated = employeeService.save(currentEmployee);
 

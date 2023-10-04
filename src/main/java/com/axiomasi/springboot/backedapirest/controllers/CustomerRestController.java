@@ -125,7 +125,7 @@ public class CustomerRestController {
 			currentCustomer.setPayment(customer.getPayment());
 			currentCustomer.setAddress(customer.getAddress());		
 			currentCustomer.setEmail(customer.getEmail());
-			currentCustomer.setAlta(customer.getAlta());
+			currentCustomer.setRegistration(customer.getRegistration());
 			
 
 			Customer customerUpdated = customerService.save(currentCustomer);

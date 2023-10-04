@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -23,25 +22,26 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, unique = true)
 	@NotNull
 	private Long dni;
-	
+
 	@NotEmpty
 	private String name;
-	
+
 	@NotEmpty
 	private String lastname;
 
@@ -55,22 +55,31 @@ public class Customer implements Serializable {
 	private String email;
 
 	@Temporal(TemporalType.DATE)
-	private Date alta;
+	private Date registration;
 
-	
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Sale> sales;
 
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "branch_id")
 	@JsonBackReference
 	private Branch branch;
 
+	@Transient // para mostrar el nombre de la sucursal en el json
+	private String branch_name;
+
 	@PrePersist
 	public void prePersist() {
-		alta = new Date();
+	 registration = new Date();
+	}
+
+	public Date getRegistration() {
+		return registration;
+	}
+
+	public void setRegistration(Date registration) {
+		this.registration = registration;
 	}
 
 	public List<Sale> getSales() {
@@ -133,7 +142,7 @@ public class Customer implements Serializable {
 		return dni;
 	}
 
-	public void setDni( Long dni) {
+	public void setDni(Long dni) {
 		this.dni = dni;
 	}
 
@@ -169,30 +178,34 @@ public class Customer implements Serializable {
 		this.email = email;
 	}
 
-	public Date getAlta() {
-		return alta;
+
+	// Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la
+	// relación branch
+	@JsonProperty("branch_id")
+	public Long getBranchId() {
+		return branch != null ? branch.getId() : null;
 	}
 
-	public void setAlta(Date alta) {
-		this.alta = alta;
-	}
-	
-    // Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la relación branch
-    @JsonProperty("branch_id")
-    public Long getBranchId() {
-        return branch != null ? branch.getId() : null;
-    }
+	// Usamos @JsonProperty para indicar que queremos mostrar solo los IDs de las
+	// sales
+	@JsonProperty("sales_ids")
+	public List<Long> getSalesIds() {
+		List<Long> salesIds = new ArrayList<>();
+		for (Sale sale : sales) {
+			salesIds.add(sale.getId());
 
-   // Usamos @JsonProperty para indicar que queremos mostrar solo los IDs de las sales
-    @JsonProperty("sales_ids")
-    public List<Long> getSalesIds() {
-        List<Long> salesIds = new ArrayList<>();
-        for (Sale sale : sales) {
-            salesIds.add(sale.getId());
-           
-        }
-        return salesIds;
-    }
+		}
+		return salesIds;
+	}
+
+	// para mostrar el nombre de la sucursal en el json
+	public String getBranch_name() {
+		return branch != null ? branch.getName() : null;
+	}
+
+	public void setBranch_name(String branch_name) {
+		this.branch_name = branch_name;
+	}
 
 	private static final long serialVersionUID = 1L;
 

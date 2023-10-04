@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -33,6 +34,12 @@ public class Product implements Serializable {
 	@NotEmpty
 	private String name;
 
+	private String model;
+
+	private String description;
+
+	private String category;
+
 	@NotEmpty
 	private String brand;
 
@@ -41,18 +48,21 @@ public class Product implements Serializable {
 
 	@NotNull
 	private int stock;
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	
+
 	private Date expiration;
-	
+
 	private Double priceBuy;
-	
-    @ManyToOne 
-    @JoinColumn(name = "branch_id")
-    @JsonBackReference
-    private Branch branch;
+
+	@ManyToOne
+	@JoinColumn(name = "branch_id")
+	@JsonBackReference
+	private Branch branch;
+
+	@Transient // para mostrar el nombre de la sucursal en el json
+	private String branch_name;
 
 	public Branch getBranch() {
 		return branch;
@@ -125,12 +135,46 @@ public class Product implements Serializable {
 	public void setPriceBuy(Double priceBuy) {
 		this.priceBuy = priceBuy;
 	}
-	
-    // Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la relación branch
-    @JsonProperty("branch_id")
-    public Long getBranchId() {
-        return branch != null ? branch.getId() : null;
-    }
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	// Usamos @JsonProperty para indicar que queremos mostrar solo el ID de la
+	// relación branch
+	@JsonProperty("branch_id")
+	public Long getBranchId() {
+		return branch != null ? branch.getId() : null;
+	}
+
+	// para mostrar el nombre de la sucursal en el json
+	public String getBranch_name() {
+		return branch != null ? branch.getName() : null;
+	}
+
+	public void setBranch_name(String branch_name) {
+		this.branch_name = branch_name;
+	}
 
 	private static final long serialVersionUID = 1L;
 

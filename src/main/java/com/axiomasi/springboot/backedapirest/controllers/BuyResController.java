@@ -18,13 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.axiomasi.springboot.backedapirest.models.entity.Buy;
-import com.axiomasi.springboot.backedapirest.models.entity.Customer;
 import com.axiomasi.springboot.backedapirest.models.entity.Provider;
-import com.axiomasi.springboot.backedapirest.models.entity.Sale;
 import com.axiomasi.springboot.backedapirest.models.service.IBuyService;
-import com.axiomasi.springboot.backedapirest.models.service.ICustomerService;
 import com.axiomasi.springboot.backedapirest.models.service.IProviderService;
-import com.axiomasi.springboot.backedapirest.models.service.ISaleService;
+
 
 import jakarta.validation.Valid;
 

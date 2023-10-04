@@ -22,6 +22,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -66,6 +67,12 @@ public class Provider implements Serializable {
 	@OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Buy> buys;
+	
+    @Transient // para mostrar el nombre de la sucursal en el json
+    private String branch_name;
+    
+	@Temporal(TemporalType.DATE)
+	private Date registration;
 
 	public Provider() {
 		buys = new ArrayList<>();
@@ -74,6 +81,31 @@ public class Provider implements Serializable {
 	@PrePersist
 	public void prePersist() {
 		dateAt = new Date();
+	}
+
+	
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public List<Buy> getBuys() {
+		return buys;
+	}
+
+	public void setBuys(List<Buy> buys) {
+		this.buys = buys;
+	}
+
+	public Date getRegistration() {
+		return registration;
+	}
+
+	public void setRegistration(Date registration) {
+		this.registration = registration;
 	}
 
 	public Long getId() {
@@ -155,6 +187,15 @@ public class Provider implements Serializable {
         }
         return buysIds;
     }
+    
+	// para mostrar el nombre de la sucursal en el json
+	public String getBranch_name() {
+		return branch != null ? branch.getName() : null;
+	}
+
+	public void setBranch_name(String branch_name) {
+		this.branch_name = branch_name;
+	}
 
 	private static final long serialVersionUID = 1L;
 

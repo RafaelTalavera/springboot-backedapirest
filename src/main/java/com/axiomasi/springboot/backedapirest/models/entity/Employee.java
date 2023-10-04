@@ -21,6 +21,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -47,6 +48,9 @@ public class Employee implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date birth;
 
+	@Temporal(TemporalType.DATE)
+	private Date registration;
+
 	@NotEmpty
 	private String address;
 
@@ -54,7 +58,7 @@ public class Employee implements Serializable {
 	private String job;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "branch_id") // Agrega esta anotación para especificar la columna de clave externa
+	@JoinColumn(name = "branch_id") // anotación para especificar la columna de clave externa
 	@JsonBackReference
 	private Branch branch;
 
@@ -65,6 +69,9 @@ public class Employee implements Serializable {
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Buy> buys;
+
+	@Transient // para mostrar el nombre de la sucursal en el json
+	private String branch_name;
 
 	public Employee() {
 		sales = new ArrayList<>();
@@ -158,32 +165,54 @@ public class Employee implements Serializable {
 	public void setBuys(List<Buy> buys) {
 		this.buys = buys;
 	}
-	
-	public Long getBranchId() {
-		
-		 return branch != null ? branch.getId() : null;
+
+	public Date getRegistration() {
+		return registration;
 	}
 
-	   @JsonProperty("sales_ids")
-	    public List<Long> getSalesIds() {
-	        List<Long> salesIds = new ArrayList<>();
-	        for (Sale sale : sales) {
-	            salesIds.add(sale.getId());
-	           
-	        }
-	        return salesIds;
-	    }
-	   
-	   @JsonProperty("buys_ids")
-	    public List<Long> getBuysIds() {
-	        List<Long> buysIds = new ArrayList<>();
-	        for (Buy buy : buys) {
-	            buysIds.add(buy.getId());
-	           
-	        }
-	        return buysIds;
-	    }
-	   
+	public void setRegistration(Date registration) {
+		this.registration = registration;
+	}
+
+	
+	//Muentra en el json el id de la sucursal
+	public Long getBranchId() {
+
+		return branch != null ? branch.getId() : null;
+	}
+	
+	// Muestra las ventas por empleado en el Json
+	@JsonProperty("sales_ids")
+	public List<Long> getSalesIds() {
+		List<Long> salesIds = new ArrayList<>();
+		for (Sale sale : sales) {
+			salesIds.add(sale.getId());
+
+		}
+		return salesIds;
+	}
+
+	// Muestra las compras por empleado en el Json
+	@JsonProperty("buys_ids")
+	public List<Long> getBuysIds() {
+		List<Long> buysIds = new ArrayList<>();
+		for (Buy buy : buys) {
+			buysIds.add(buy.getId());
+
+		}
+		return buysIds;
+	}
+
+	// para mostrar el nombre de la sucursal en el json
+	public String getBranch_name() {
+		return branch != null ? branch.getName() : null;
+	}
+	
+	// para mostrar el nombre de la sucursal en el json
+	public void setBranch_name(String branch_name) {
+		this.branch_name = branch_name;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 }
