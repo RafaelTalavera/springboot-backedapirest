@@ -16,7 +16,7 @@ INSERT INTO employees (dni, cuit, name, lastname, birth, registration, address, 
 INSERT INTO employees (dni, cuit, name, lastname, birth, registration, address, job, branch_id) VALUES(12345679, 98765439, 'Empleado 9', 'Apellido Empleado 9', '1992-01-15', '1991-01-15', 'Dirección Empleado 9', 'Estockista', 1);
 
 -- Insertar datos en la tabla 'providers'
-INSERT INTO providers (name, dni, phone, payment, address, email, date_at, branch_id) VALUES('Proveedor 1', '123456789', '987654321', 'Método de Pago 1', 'Dirección Proveedor 1', 'proveedor1@example.com', '2023-09-25', 1);
+INSERT INTO providers (name, dni, phone, payment, address, email, date_at,registration, branch_id) VALUES('Proveedor 1', '123456789', '987654321', 'Método de Pago 1', 'Dirección Proveedor 1', 'proveedor1@example.com', '2023-09-25','2023-09-25',  1);
 
 -- Insertar datos en la tabla 'customers'
 INSERT INTO customers (dni, name, lastname, phone, payment, address, email, registration, branch_id) VALUES(111, 'Cliente 1', 'Apellido Cliente 1', '11-1111-11', 'Método de Pago Cliente 1', 'Dirección Cliente 1', 'cliente1@example.com', '2021-09-25', 1);

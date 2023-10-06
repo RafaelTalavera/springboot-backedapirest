@@ -49,9 +49,8 @@ public class Product implements Serializable {
 	@NotNull
 	private int stock;
 
-	@NotNull
-	@Temporal(TemporalType.DATE)
 
+	@Temporal(TemporalType.DATE)
 	private Date expiration;
 
 	private Double priceBuy;

@@ -81,6 +81,7 @@ public class Provider implements Serializable {
 	@PrePersist
 	public void prePersist() {
 		dateAt = new Date();
+		registration = new Date();
 	}
 
 	

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -172,6 +173,18 @@ public class Branch implements Serializable {
 		this.sales = sales;
 	}
 
+	//Calcula el total de empleados por sucursal
+	 @JsonProperty("totalEmployees")
+	public int getTotalEmployees() {
+	    return employees.size();
+	}
+	 
+	//Calcula el total de clientes por sucursal
+	 @JsonProperty("totalCustomers")
+	public int getTotalCustomers() {
+	    return customers.size();
+	}
+	
 	private static final long serialVersionUID = 1L;
 
 }
