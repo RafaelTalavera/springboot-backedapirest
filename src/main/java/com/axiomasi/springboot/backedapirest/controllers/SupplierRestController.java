@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.axiomasi.springboot.backedapirest.models.entity.Provider;
-import com.axiomasi.springboot.backedapirest.models.service.IProviderService;
+import com.axiomasi.springboot.backedapirest.models.entity.Supplier;
+import com.axiomasi.springboot.backedapirest.models.service.ISupplierService;
 
 import jakarta.validation.Valid;
 
@@ -31,42 +31,42 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api")
 
-public class ProviderRestController {
+public class SupplierRestController {
 	
 	@Autowired
-	private IProviderService providerService;
+	private ISupplierService supplierService;
 	
-	@GetMapping("/provider")
-	public List<Provider> index(){
-		return providerService.findAll();
+	@GetMapping("/supplier")
+	public List<Supplier> index(){
+		return supplierService.findAll();
 	}
 	
-	@GetMapping("/provider/{id}")
+	@GetMapping("/supplier/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id) {
 
-		Provider provider = null;
+		Supplier supplier = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			provider = providerService.findById(id);
+			supplier = supplierService.findById(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "<error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (provider == null) {
+		if (supplier == null) {
 
 			response.put("mensaje", "El proveedor ID: ".concat(id.toString().concat(" no existe en la base de datos")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Provider>(provider, HttpStatus.OK);
+		return new ResponseEntity<Supplier>(supplier, HttpStatus.OK);
 	}
 
-	@PostMapping("/provider")
-	public ResponseEntity<?> create(@Valid @RequestBody Provider provider, BindingResult result) { // Agrega la anotación @Valid y BindingResult
-		Provider providerNew = null;
+	@PostMapping("/supplier")
+	public ResponseEntity<?> create(@Valid @RequestBody Supplier supplier, BindingResult result) { // Agrega la anotación @Valid y BindingResult
+		Supplier providerNew = null;
 		Map<String, Object> response = new HashMap<>();
 		
 		if (result.hasErrors()) {
@@ -82,7 +82,7 @@ public class ProviderRestController {
 		}
 
 		try {
-			providerNew = providerService.save(provider);
+			providerNew = supplierService.save(supplier);
 			response.put("mensaje", "El proveedor fue guardado correctamente");
 			response.put("proveedor", providerNew);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
@@ -92,10 +92,10 @@ public class ProviderRestController {
 		}
 	}
 
-	@PutMapping("/proveedor/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody Provider provider,BindingResult result, @PathVariable Long id) {
+	@PutMapping("/supplier/{id}")
+	public ResponseEntity<?> update(@Valid @RequestBody Supplier supplier,BindingResult result, @PathVariable Long id) {
 
-		Provider currentProvider = providerService.findById(id);
+		Supplier currentSupplier = supplierService.findById(id);
 
 		Map<String, Object> response = new HashMap<>();
 		
@@ -111,20 +111,20 @@ public class ProviderRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 
-		if (currentProvider == null) {
+		if (currentSupplier == null) {
 			response.put("mensaje", "Error, no se pudo editar el proveedor ID: " + id + " no existe en la base de datos");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
 		try {
-			currentProvider.setName(provider.getName());
-			currentProvider.setEmail(provider.getEmail());
-			currentProvider.setDateAt(provider.getDateAt());
+			currentSupplier.setName(supplier.getName());
+			currentSupplier.setEmail(supplier.getEmail());
+			currentSupplier.setDateAt(supplier.getDateAt());
 
-			Provider providerUpdated = providerService.save(currentProvider);
+			Supplier supplierUpdated = supplierService.save(currentSupplier);
 
 			response.put("mensaje", "El proveedor ha sido actualizado con éxito");
-			response.put("proveedor", providerUpdated);
+			response.put("proveedor", supplierUpdated);
 
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 			
@@ -137,12 +137,12 @@ public class ProviderRestController {
 
 	@DeleteMapping("/proveedor/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Provider currentProvider = this.providerService.findById(id);
+		Supplier currentSupplier = this.supplierService.findById(id);
 
 		Map<String, Object> response = new HashMap<>();
 		try {
 
-			this.providerService.delete(currentProvider);
+			this.supplierService.delete(currentSupplier);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar en la base de datos");

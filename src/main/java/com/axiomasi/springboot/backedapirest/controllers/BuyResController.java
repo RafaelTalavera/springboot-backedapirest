@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.axiomasi.springboot.backedapirest.models.entity.Buy;
-import com.axiomasi.springboot.backedapirest.models.entity.Provider;
+import com.axiomasi.springboot.backedapirest.models.entity.Supplier;
 import com.axiomasi.springboot.backedapirest.models.service.IBuyService;
-import com.axiomasi.springboot.backedapirest.models.service.IProviderService;
+import com.axiomasi.springboot.backedapirest.models.service.ISupplierService;
 
 
 import jakarta.validation.Valid;
@@ -35,7 +35,7 @@ public class BuyResController {
 	private IBuyService buyService;
 	
 	@Autowired
-	private IProviderService providerService;
+	private ISupplierService supplierService;
 
 	@GetMapping("/buy")
 	public List<Buy> index() {
@@ -72,10 +72,10 @@ public class BuyResController {
 	public ResponseEntity<?> create(@Valid @RequestBody Buy buy, @PathVariable("providerId") Long providerId, BindingResult result) {
 	    // Aquí customerId es un parámetro de ruta que se recibe desde la URL
 
-	    Provider provider = providerService.findById(providerId);
+	    Supplier supplier = supplierService.findById(providerId);
 	    Map<String, Object> response = new HashMap<>();
 
-	    if (provider == null) {
+	    if (supplier == null) {
 	        response.put("mensaje", "El cliente con ID: " + providerId + " no existe en la base de datos");
 	        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	    }
@@ -89,7 +89,7 @@ public class BuyResController {
 
 	    try {
 	        // Puedes asociar el cliente (customer) a la venta (sale) antes de guardarla en la base de datos
-	        buy.setProvider(provider);
+	        buy.setProvider(supplier);
 	        newBuy = buyService.save(buy);
 	    } catch (DataAccessException e) {
 	        response.put("mensaje", "Error al crear la venta en la base de datos");

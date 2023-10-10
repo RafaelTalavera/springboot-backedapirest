@@ -29,7 +29,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "providers")
-public class Provider implements Serializable {
+public class Supplier implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,7 +74,7 @@ public class Provider implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date registration;
 
-	public Provider() {
+	public Supplier() {
 		buys = new ArrayList<>();
 	}
 

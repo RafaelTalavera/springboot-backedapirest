@@ -6,40 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.axiomasi.springboot.backedapirest.models.dao.IProviderDao;
-import com.axiomasi.springboot.backedapirest.models.entity.Provider;
+import com.axiomasi.springboot.backedapirest.models.dao.ISupplierDao;
+import com.axiomasi.springboot.backedapirest.models.entity.Supplier;
 
 @Service
-public class ProviderServiceImplement implements IProviderService {
+public class SupplierServiceImplement implements ISupplierService {
 
 	@Autowired
-	private IProviderDao providerDao;
+	private ISupplierDao supplierDao;
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Provider> findAll() {
-		return (List<Provider>) providerDao.findAll();
+	public List<Supplier> findAll() {
+		return (List<Supplier>) supplierDao.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Provider findById(Long id) {
+	public Supplier findById(Long id) {
         if (id <= 0) {
             throw new IllegalArgumentException("El ID proporcionado no es válido: " + id);
         }
-        return providerDao.findById(id).orElse(null);
+        return supplierDao.findById(id).orElse(null);
     }
 
 	@Override
 	@Transactional
-	public Provider save(Provider provider) {
-		return providerDao.save(provider);
+	public Supplier save(Supplier supplier) {
+		return supplierDao.save(supplier);
 	}
 
 	@Override
     @Transactional
-	public void delete(Provider provider) {
-		providerDao.delete(provider);
+	public void delete(Supplier supplier) {
+		supplierDao.delete(supplier);
 		
 	}
 

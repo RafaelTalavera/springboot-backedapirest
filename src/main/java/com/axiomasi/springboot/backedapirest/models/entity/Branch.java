@@ -52,7 +52,7 @@ public class Branch implements Serializable {
     
     @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Provider> providers;
+	private List<Supplier> suppliers;
     
     @JsonIgnore
 	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -70,7 +70,7 @@ public class Branch implements Serializable {
 	public Branch() {
 		employees = new ArrayList<>();
 		products = new ArrayList<>();
-		providers = new ArrayList<>();
+		suppliers = new ArrayList<>();
 		customers = new ArrayList<>();
 		buys = new ArrayList<>();
 		sales = new ArrayList<>();
@@ -141,12 +141,12 @@ public class Branch implements Serializable {
 		this.products = products;
 	}
 
-	public List<Provider> getProviders() {
-		return providers;
+	public List<Supplier> getProviders() {
+		return suppliers;
 	}
 
-	public void setProviders(List<Provider> providers) {
-		this.providers = providers;
+	public void setProviders(List<Supplier> suppliers) {
+		this.suppliers = suppliers;
 	}
 
 	public List<Customer> getCustomers() {

@@ -40,7 +40,7 @@ public class Buy implements Serializable {
 	private Employee employee;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Provider provider;
+	private Supplier supplier;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Branch branch;
@@ -58,8 +58,8 @@ public class Buy implements Serializable {
 		this.branch = branch;
 	}
 
-	public void setProvider(Provider provider) {
-		this.provider = provider;
+	public void setProvider(Supplier supplier) {
+		this.supplier = supplier;
 	}
 
 	public Buy() {
@@ -82,12 +82,12 @@ public class Buy implements Serializable {
 		this.employee = employee;
 	}
 
-	public Provider getProvider() {
-		return provider;
+	public Supplier getProvider() {
+		return supplier;
 	}
 
-	public void setCustumer(Provider provider) {
-		this.provider = provider;
+	public void setCustumer(Supplier supplier) {
+		this.supplier = supplier;
 	}
 
 	public Long getId() {
