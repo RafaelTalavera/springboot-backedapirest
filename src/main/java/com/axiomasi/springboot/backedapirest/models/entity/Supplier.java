@@ -28,7 +28,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "providers")
+@Table(name = "suppliers")
 public class Supplier implements Serializable {
 
 	@Id
@@ -64,7 +64,7 @@ public class Supplier implements Serializable {
 	@JsonBackReference
 	private Branch branch;
 
-	@OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Buy> buys;
 	
